@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MN106 — Neurorehabilitation & Neural Engineering Laboratory</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1D3A;
+    --teal: #2EC4B6;
+    --teal-dark: #1A9E92;
+    --cream: #FAF8F5;
+    --gray-200: #DDD8D0;
+    --gray-400: #9A948A;
+    --gray-600: #5C574F;
+    --gray-800: #2E2A25;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: var(--navy);
+    font-family: 'Source Sans 3', sans-serif;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  body::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -15%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(46,196,182,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(240,165,0,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .container {
+    max-width: 520px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(46,196,182,0.15);
+    border: 1px solid rgba(46,196,182,0.3);
+    color: var(--teal);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 30px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  h1 span { color: var(--teal); }
+  .subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    margin-bottom: 48px;
+    line-height: 1.6;
+  }
+  .card-link {
+    display: block;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 28px 28px;
+    margin-bottom: 16px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-link:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(46,196,182,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
+  .card-link:hover .card-arrow { transform: translateX(4px); }
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-icon.teal { background: rgba(46,196,182,0.15); }
+  .card-icon.amber { background: rgba(240,165,0,0.15); }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .card-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+  .card-arrow {
+    color: var(--teal);
+    transition: transform 0.2s;
+  }
+  .footer {
+    margin-top: 48px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    line-height: 1.6;
+  }
+  .footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  .footer a:hover { color: var(--teal); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .badge { animation: fadeUp 0.5s ease both; }
+  h1 { animation: fadeUp 0.5s ease 0.1s both; }
+  .subtitle { animation: fadeUp 0.5s ease 0.2s both; }
+  .card-link:nth-child(1) { animation: fadeUp 0.5s ease 0.3s both; }
+  .card-link:nth-child(2) { animation: fadeUp 0.5s ease 0.4s both; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="badge">MN106</div>
+  <h1>Neurorehabilitation &<br><span>Neural Engineering</span> Lab</h1>
+  <p class="subtitle">PI: Prof. Xiao Ling Hu · The Hong Kong Polytechnic University</p>
+
+  <a class="card-link" href="meeting-tool.html">
+    <div class="card-top">
+      <div class="card-icon teal">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2EC4B6" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg>
+      </div>
+      <div class="card-title">Meeting Attendees</div>
+    </div>
+    <div class="card-desc">一键复制参会人邮箱，快速创建 Outlook 会议邀请。支持多分组管理。</div>
+    <div class="card-bottom">
+      <span class="card-tag">Quick Copy Tool</span>
+      <svg class="card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+  </a>
+
+  <a class="card-link" href="lab-safety.html">
+    <div class="card-top">
+      <div class="card-icon amber">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F0A500" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="card-title">Lab Safety Guide</div>
+    </div>
+    <div class="card-desc">实验室安全准则与独立工作政策，支持中/英/日/韩四语切换，可下载 PDF 签署。</div>
+    <div class="card-bottom">
+      <span class="card-tag">EN · 中文 · 日本語 · 한국어</span>
+      <svg class="card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+  </a>
+
+  <div class="footer">
+    Neurorehabilitation & Neural Engineering Laboratory · MN106<br>
+    The Hong Kong Polytechnic University
+  </div>
+</div>
+
+</body>
+</html>

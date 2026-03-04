@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MN106 Lab Safety Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1D3A;
+    --teal: #2EC4B6;
+    --teal-dark: #1A9E92;
+    --amber: #F0A500;
+    --red: #E63946;
+    --cream: #FAF8F5;
+    --gray-100: #F0EDE8;
+    --gray-200: #DDD8D0;
+    --gray-400: #9A948A;
+    --gray-600: #5C574F;
+    --gray-800: #2E2A25;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Source Sans 3', 'Noto Sans SC', 'Noto Sans JP', 'Noto Sans KR', sans-serif;
+    background: var(--cream); color: var(--gray-800); line-height: 1.7;
+  }
+  /* Lock Screen */
+  .lock-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy);
+  }
+  .lock-box {
+    text-align: center;
+    padding: 48px 36px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    max-width: 380px;
+    width: 90%;
+  }
+  .lock-icon {
+    width: 64px; height: 64px;
+    background: rgba(46,196,182,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .lock-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 600; color: white; margin-bottom: 8px;
+  }
+  .lock-hint {
+    font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 24px;
+  }
+  .lock-input {
+    width: 100%; padding: 14px 18px;
+    border: 2px solid rgba(255,255,255,0.15); border-radius: 12px;
+    font-size: 16px; text-align: center; color: white; outline: none;
+    letter-spacing: 3px; transition: border-color 0.2s;
+    background: rgba(255,255,255,0.05);
+  }
+  .lock-input:focus { border-color: var(--teal); }
+  .lock-input::placeholder { color: rgba(255,255,255,0.3); }
+  .lock-input.error { border-color: var(--red); animation: shake 0.4s ease; }
+  .lock-submit {
+    width: 100%; padding: 14px;
+    background: var(--teal); color: white; border: none;
+    border-radius: 12px; cursor: pointer;
+    font-size: 15px; font-weight: 600;
+    margin-top: 12px; transition: all 0.2s;
+  }
+  .lock-submit:hover { background: var(--teal-dark); }
+  .lock-error-msg {
+    font-size: 12px; color: var(--red); margin-top: 10px;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .lock-error-msg.show { opacity: 1; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+    75% { transform: translateX(-4px); }
+  }
+  .main-content { display: none; }
+  .hero { background: var(--navy); color: white; position: relative; overflow: hidden; }
+  .hero::before { content:''; position:absolute; top:-50%; right:-20%; width:600px; height:600px; background:radial-gradient(circle,rgba(46,196,182,0.15) 0%,transparent 70%); pointer-events:none; }
+  .hero::after { content:''; position:absolute; bottom:-30%; left:-10%; width:400px; height:400px; background:radial-gradient(circle,rgba(240,165,0,0.1) 0%,transparent 70%); pointer-events:none; }
+  .hero-inner { max-width:900px; margin:0 auto; padding:60px 24px 50px; position:relative; z-index:1; }
+  .hero-badge { display:inline-block; background:rgba(46,196,182,0.15); border:1px solid rgba(46,196,182,0.3); color:var(--teal); font-size:12px; font-weight:600; letter-spacing:2px; text-transform:uppercase; padding:6px 16px; border-radius:30px; margin-bottom:24px; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(28px,5vw,48px); font-weight:700; line-height:1.15; margin-bottom:16px; letter-spacing:-0.5px; }
+  .hero h1 span { color:var(--teal); }
+  .hero-sub { font-size:17px; color:rgba(255,255,255,0.6); font-weight:300; max-width:560px; margin-bottom:36px; }
+  .hero-meta { display:flex; gap:28px; flex-wrap:wrap; font-size:13px; color:rgba(255,255,255,0.45); }
+  .hero-meta span { display:flex; align-items:center; gap:6px; }
+  .hero-meta svg { opacity:0.5; }
+
+  .lang-switcher { position:absolute; top:24px; right:24px; z-index:10; display:flex; gap:0; background:rgba(255,255,255,0.08); border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); }
+  .lang-btn { padding:8px 14px; border:none; background:transparent; color:rgba(255,255,255,0.5); font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:inherit; }
+  .lang-btn:hover { color:rgba(255,255,255,0.8); background:rgba(255,255,255,0.06); }
+  .lang-btn.active { color:white; background:var(--teal); }
+
+  .sticky-nav { position:sticky; top:0; z-index:100; background:white; border-bottom:1px solid var(--gray-200); box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+  .sticky-nav-inner { max-width:900px; margin:0 auto; padding:0 24px; display:flex; gap:0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .sticky-nav-inner::-webkit-scrollbar { display:none; }
+  .nav-link { padding:14px 18px; font-size:13px; font-weight:600; color:var(--gray-400); text-decoration:none; white-space:nowrap; border-bottom:2px solid transparent; transition:all 0.2s; }
+  .nav-link:hover { color:var(--navy); border-bottom-color:var(--gray-200); }
+  .nav-link.active { color:var(--navy); border-bottom-color:var(--teal); }
+
+  .content { max-width:900px; margin:0 auto; padding:0 24px 80px; }
+  .section { padding-top:48px; }
+  .section-header { display:flex; align-items:center; gap:14px; margin-bottom:28px; }
+  .section-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .section-icon.blue { background:rgba(11,29,58,0.08); color:var(--navy); }
+  .section-icon.teal { background:rgba(46,196,182,0.12); color:var(--teal-dark); }
+  .section-icon.amber { background:rgba(240,165,0,0.12); color:#C48600; }
+  .section-title { font-family:'Playfair Display',serif; font-size:26px; font-weight:600; color:var(--navy); }
+
+  .rule-card { background:white; border-radius:14px; padding:20px 24px; margin-bottom:10px; display:flex; gap:16px; align-items:flex-start; border:1px solid var(--gray-100); transition:all 0.2s; }
+  .rule-card:hover { border-color:var(--gray-200); box-shadow:0 4px 16px rgba(0,0,0,0.04); transform:translateY(-1px); }
+  .rule-num { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0; margin-top:2px; }
+  .rule-num.blue { background:var(--navy); color:white; }
+  .rule-num.red { background:var(--red); color:white; }
+  .rule-num.teal { background:var(--teal); color:white; }
+  .rule-text { font-size:15px; color:var(--gray-600); line-height:1.7; }
+
+  .highlight-box { background:linear-gradient(135deg,rgba(230,57,70,0.06),rgba(240,165,0,0.06)); border-left:4px solid var(--red); border-radius:0 14px 14px 0; padding:20px 24px; margin-bottom:10px; display:flex; gap:14px; align-items:flex-start; }
+  .highlight-box .rule-text { color:var(--gray-800); font-weight:500; }
+
+  .table-wrapper { overflow-x:auto; border-radius:14px; border:1px solid var(--gray-200); background:white; margin-top:8px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; min-width:600px; }
+  thead { background:var(--navy); color:white; }
+  th { padding:14px 16px; text-align:left; font-weight:600; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; }
+  td { padding:12px 16px; border-bottom:1px solid var(--gray-100); color:var(--gray-600); }
+  tr:last-child td { border-bottom:none; }
+  tbody tr:hover { background:rgba(46,196,182,0.03); }
+  .status-allow { display:inline-block; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; background:rgba(46,196,182,0.12); color:var(--teal-dark); }
+  .status-notallow { display:inline-block; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; background:rgba(230,57,70,0.1); color:var(--red); }
+  .status-conditional { display:inline-block; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; background:rgba(240,165,0,0.12); color:#B07800; }
+
+  .mn106-note { margin-top:16px; padding:16px 20px; background:rgba(240,165,0,0.08); border-radius:12px; font-size:13px; color:var(--gray-600); }
+  .mn106-note strong { color:#B07800; }
+
+  .declaration { background:white; border:2px solid var(--navy); border-radius:14px; padding:32px; margin-top:40px; text-align:center; }
+  .declaration h3 { font-family:'Playfair Display',serif; font-size:22px; color:var(--navy); margin-bottom:12px; }
+  .declaration p { font-size:15px; color:var(--gray-600); max-width:500px; margin:0 auto 24px; }
+  .sig-fields { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-top:20px; }
+  .sig-field { flex:1; min-width:140px; max-width:200px; border-bottom:1px solid var(--gray-200); padding-bottom:8px; text-align:center; }
+  .sig-label { font-size:12px; color:var(--gray-400); text-transform:uppercase; letter-spacing:1px; font-weight:600; margin-top:6px; }
+
+  .footer { text-align:center; padding:40px 24px; font-size:13px; color:var(--gray-400); border-top:1px solid var(--gray-200); max-width:900px; margin:0 auto; }
+
+  @media (max-width:600px) {
+    .hero-inner { padding:50px 20px 36px; }
+    .lang-switcher { top:14px; right:14px; }
+    .lang-btn { padding:6px 10px; font-size:11px; }
+    .rule-card { padding:16px; gap:12px; }
+    .section-title { font-size:22px; }
+    .declaration { padding:24px 16px; }
+    .nav-link { padding:12px 14px; font-size:12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Lock Screen -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-box">
+    <div class="lock-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(46,196,182,1)" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <div class="lock-title">MN106 Lab Safety</div>
+    <div class="lock-hint">请输入密码以访问实验室安全准则<br>Enter password to access lab safety guide</div>
+    <input class="lock-input" id="pwdInput" type="password" placeholder="Password" autocomplete="off">
+    <button class="lock-submit" id="pwdSubmit">验 证 / Verify</button>
+    <div class="lock-error-msg" id="pwdError">密码错误 / Incorrect password</div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" id="mainContent">
+
+<div class="hero">
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="switchLang('en')">EN</button>
+    <button class="lang-btn" onclick="switchLang('zh')">中文</button>
+    <button class="lang-btn" onclick="switchLang('ja')">日本語</button>
+    <button class="lang-btn" onclick="switchLang('ko')">한국어</button>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-badge">MN106 Lab Safety</div>
+    <h1 id="heroTitle"></h1>
+    <p class="hero-sub" id="heroSub"></p>
+    <div class="hero-meta">
+      <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Room MN106, PolyU</span>
+      <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> PI: Prof. Xiao Ling Hu</span>
+      <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Updated Sept 2018</span>
+    </div>
+  </div>
+</div>
+
+<div class="sticky-nav">
+  <div class="sticky-nav-inner">
+    <a href="#general" class="nav-link active" id="navGeneral"></a>
+    <a href="#rehab" class="nav-link" id="navRehab"></a>
+    <a href="#workalone" class="nav-link" id="navWorkalone"></a>
+    <a href="#declaration" class="nav-link" id="navDeclaration"></a>
+  </div>
+</div>
+
+<div class="content" id="app"></div>
+<div class="footer" id="footerText"></div>
+
+</div><!-- end main-content -->
+
+<script>
+const T={en:{hero_title:'Neurorehabilitation & <span>Neural Engineering</span> Laboratory',hero_sub:'Essential safety guidelines for all laboratory users. Read carefully before entering the lab.',nav_general:'General Rules',nav_rehab:'Rehab & Experiments',nav_workalone:'Work Alone Policy',nav_declaration:'Declaration',sec_general:'General Safety Rules',sec_rehab:'Rehabilitation Training & Human Subject Experiments',sec_workalone:'Work Alone Policy',table_scroll:'Scroll horizontally on mobile to view the full table.',th_room:'Room',th_pi:'PI',th_lab:'Laboratory Name',th_policy:'Work Alone',mn106_note:'<strong>Note for MN106:</strong> Can work alone <em>without patient</em>. When conducting experiments with human subjects, another lab member must be present.',sec_declaration:'Declaration',decl_text:'I confirm that I have read and understood these lab safety instructions and work alone policy. I agree to follow the rules described.',sig_signature:'Signature',sig_name:'Name',sig_date:'Date',download_pdf:'Download PDF (Print & Sign)',footer:'Neurorehabilitation & Neural Engineering Laboratory · MN106 · The Hong Kong Polytechnic University',allow:'Allow',notallow:'Not Allow',conditional:'Conditional',no_patient:'No patient alone',rules:['No person is allowed to use the laboratory without prior approval by the authorized person / laboratory-in-charge.','Laboratory safety rules must be read, understood and followed by all laboratory users.','Specific safety rules and operating instructions must be consistent with the manufacturers\' recommendations and posted in the laboratory close to the respective machines.','Users of machines must be properly trained. Inexperienced operators such as students must be properly supervised.','Staff and students must not work alone in the laboratory if they need to operate potentially dangerous machinery or engage in potentially dangerous work processes.','Machines must not be used without appropriate guards. All guards must be correctly placed before a machine is started. The laboratory supervisor in-charge must be informed of any missing or damaged guards.','All laboratory users must know the location of the first aid box and fire extinguisher in the laboratory.','All laboratory users must know the nearest exit by using the escape map. The map should be hung up at the main entrance of the laboratory.','Machines/devices must NOT be left running unattended except in special circumstances where adequate safety measures are in place and only with the written approval of the supervisor/person in charge.','Slippers, sandals or other shoes that expose your toes are <strong>not allowed</strong>.','Eating, drinking and smoking are <strong>not allowed</strong> in the laboratory.','All conducting surfaces of machines must be grounded properly.','Adequate lighting should be provided for working. Lighting should be placed or shaded to prevent direct rays of light from projecting on the eyes of workers.','Electrical connections to switch boxes, fuse boxes, isolators, etc. must only be undertaken by competent electricians qualified and authorized to perform the job.'],rehab_rules:['Device users must check the functionality before any experiment on human subjects, and should set the device to its initial configuration for each usage.','Training devices are not allowed to be used outside the laboratory without the approval from the lab-in-charge.','All electrically powered systems should be grounded to earth to prevent electrical shock when attached to the human body.','All rehabilitation experiments/training on human subjects should be conducted during working days when the on-campus medical clinic is open for service.','A wheelchair must always be ready for human subjects with motor disability to escape in case of any accident (e.g., fire alarm).','Keep the rehabilitation area tidy with no obstacles in the pathway.']},
+zh:{hero_title:'神经康复与<span>神经工程</span>实验室',hero_sub:'所有实验室使用者必读的安全准则。进入实验室前请仔细阅读。',nav_general:'通用规则',nav_rehab:'康复训练与实验',nav_workalone:'独立工作政策',nav_declaration:'声明签署',sec_general:'通用安全规则',sec_rehab:'康复训练与人体实验',sec_workalone:'独立工作政策',table_scroll:'在手机上可横向滑动查看完整表格。',th_room:'房间',th_pi:'负责人',th_lab:'实验室名称',th_policy:'独立工作',mn106_note:'<strong>MN106 注意事项：</strong>无患者时可以独立工作。进行人体实验时，必须有其他实验室成员在场。',sec_declaration:'声明',decl_text:'本人确认已阅读并理解以上实验室安全规则和独立工作政策，并同意遵守所述规定。',sig_signature:'签名',sig_name:'姓名',sig_date:'日期',download_pdf:'下载 PDF（打印并签署）',footer:'神经康复与神经工程实验室 · MN106 · 香港理工大学',allow:'允许',notallow:'不允许',conditional:'有条件',no_patient:'无患者时允许',rules:['未经授权人员/实验室负责人事先批准，任何人不得使用实验室。','所有实验室使用者必须阅读、理解并遵守实验室安全规则。','具体的安全规则和操作说明必须符合制造商的建议，并张贴在实验室内相应设备附近。','设备使用者必须经过适当培训。缺乏经验的操作者（如学生）必须在监督下操作。','如需操作有潜在危险的机器或进行有潜在危险的工作流程，员工和学生不得独自在实验室工作。','不得在没有适当防护装置的情况下使用机器。启动机器前，所有防护装置必须正确安装。任何防护装置缺失或损坏须通知实验室负责人。','所有实验室使用者必须知道急救箱和灭火器的位置。','所有实验室使用者必须通过逃生地图了解最近的出口。逃生地图应悬挂在实验室主入口处。','除非有充分的安全措施且获得负责人书面批准，否则不得在无人看管的情况下让设备运行。','拖鞋、凉鞋或其他暴露脚趾的鞋子<strong>不允许</strong>穿着。','实验室内<strong>不允许</strong>吃东西、喝饮料和吸烟。','所有机器的导电表面必须正确接地。','工作区域应提供充足照明。灯具的放置或遮蔽方式应防止直射光线照射工作人员的眼睛。','配电箱、保险丝盒、隔离器等电气连接，只能由有资质并获得授权的电工进行。'],rehab_rules:['在对人体受试者进行任何实验之前，设备使用者必须检查设备功能，并在每次使用时将设备设置为初始配置。','未经实验室负责人批准，训练设备不得在实验室外使用。','所有电力驱动的系统在连接到人体时，应正确接地以防止电击。','所有针对人体受试者的康复实验/训练应在工作日且校内医疗诊所开放服务期间进行。','必须随时准备好轮椅，以便有运动障碍的受试者在发生意外（如火警）时撤离。','保持康复区域整洁，通道内不得有障碍物。']},
+ja:{hero_title:'神経リハビリテーション＆<span>神経工学</span>研究室',hero_sub:'すべてのラボ利用者のための安全ガイドライン。入室前に必ずお読みください。',nav_general:'一般規則',nav_rehab:'リハビリ・実験',nav_workalone:'単独作業方針',nav_declaration:'宣言書',sec_general:'一般安全規則',sec_rehab:'リハビリ訓練および人体実験',sec_workalone:'単独作業ポリシー',table_scroll:'モバイルでは横にスクロールして全体をご覧ください。',th_room:'部屋',th_pi:'責任者',th_lab:'研究室名',th_policy:'単独作業',mn106_note:'<strong>MN106の注意事項：</strong>患者がいない場合は単独作業可。被験者実験時は他のメンバーの同席が必要です。',sec_declaration:'宣言書',decl_text:'私は上記の実験室安全規則および単独作業ポリシーを読み、理解したことを確認し、記載された規則に従うことに同意します。',sig_signature:'署名',sig_name:'氏名',sig_date:'日付',download_pdf:'PDFをダウンロード（印刷して署名）',footer:'神経リハビリテーション＆神経工学研究室 · MN106 · 香港理工大学',allow:'許可',notallow:'不許可',conditional:'条件付き',no_patient:'患者なし時のみ',rules:['許可された責任者/ラボ管理者の事前承認なしに、何人もラボを使用してはなりません。','すべてのラボ利用者は、安全規則を読み、理解し、遵守しなければなりません。','具体的な安全規則と操作手順は、メーカーの推奨事項に準拠し、該当機器の近くに掲示する必要があります。','機器の利用者は適切な訓練を受けなければなりません。学生など経験の浅い操作者は適切な監督の下で作業してください。','危険を伴う可能性のある機器の操作や作業を行う場合、スタッフや学生はラボで単独作業をしてはなりません。','適切なガードなしに機器を使用してはなりません。機器起動前にすべてのガードを正しく設置してください。ガードの紛失や破損はラボ管理者に報告してください。','すべてのラボ利用者は、救急箱と消火器の場所を把握していなければなりません。','すべてのラボ利用者は、避難経路図で最寄りの出口を確認してください。避難経路図はラボの正面入口に掲示してください。','十分な安全対策があり管理者の書面承認がある場合を除き、機器を無人で稼働させてはなりません。','スリッパ、サンダル、つま先が露出する靴の着用は<strong>禁止</strong>です。','ラボ内での飲食および喫煙は<strong>禁止</strong>です。','すべての機器の導電性表面は適切に接地する必要があります。','作業に適切な照明を確保してください。作業者の目に直接光が当たらないよう配置または遮光してください。','配電盤、ヒューズボックス等の電気接続は、資格を持ち許可された電気技師のみが行えます。'],rehab_rules:['被験者実験前に使用者は機器の機能を確認し、毎回初期設定に戻す必要があります。','ラボ管理者の承認なしに訓練機器をラボ外で使用してはなりません。','人体に装着するすべての電動システムは、感電防止のため適切に接地する必要があります。','被験者に対するすべてのリハビリ実験/訓練は、キャンパス内医療クリニックが開いている平日に実施してください。','運動障害のある被験者が事故時に避難できるよう、車椅子を常に準備しておく必要があります。','リハビリエリアを整頓し、通路に障害物を置かないでください。']},
+ko:{hero_title:'신경재활 및 <span>신경공학</span> 연구실',hero_sub:'모든 실험실 사용자를 위한 필수 안전 지침입니다. 입실 전 반드시 읽어주세요.',nav_general:'일반 규칙',nav_rehab:'재활 및 실험',nav_workalone:'단독 작업 정책',nav_declaration:'서약서',sec_general:'일반 안전 규칙',sec_rehab:'재활 훈련 및 인체 실험',sec_workalone:'단독 작업 정책',table_scroll:'모바일에서는 좌우로 스크롤하여 전체 표를 확인하세요.',th_room:'호실',th_pi:'책임자',th_lab:'연구실명',th_policy:'단독 작업',mn106_note:'<strong>MN106 참고사항:</strong> 환자가 없을 때는 단독 작업이 가능합니다. 인체 실험 시에는 다른 구성원이 반드시 함께 있어야 합니다.',sec_declaration:'서약서',decl_text:'본인은 상기 실험실 안전 규칙 및 단독 작업 정책을 읽고 이해하였으며, 명시된 규칙을 준수할 것에 동의합니다.',sig_signature:'서명',sig_name:'이름',sig_date:'날짜',download_pdf:'PDF 다운로드 (인쇄 후 서명)',footer:'신경재활 및 신경공학 연구실 · MN106 · 홍콩이공대학교',allow:'허용',notallow:'불허',conditional:'조건부',no_patient:'환자 없을 시 허용',rules:['허가된 책임자/실험실 관리자의 사전 승인 없이는 누구도 실험실을 사용할 수 없습니다.','모든 실험실 사용자는 안전 규칙을 읽고 이해하고 준수해야 합니다.','구체적인 안전 규칙 및 조작 지침은 제조업체의 권장 사항과 일치해야 하며, 해당 장비 근처에 게시해야 합니다.','장비 사용자는 적절한 교육을 받아야 합니다. 학생 등 미숙련 조작자는 적절한 감독 하에 작업해야 합니다.','위험한 기계를 조작하거나 위험한 작업을 수행해야 하는 경우, 직원과 학생은 단독으로 작업해서는 안 됩니다.','적절한 안전장치 없이 기계를 사용해서는 안 됩니다. 기계 가동 전 모든 안전장치를 올바르게 설치해야 합니다. 안전장치의 분실 또는 손상은 관리자에게 보고해야 합니다.','모든 실험실 사용자는 구급상자와 소화기의 위치를 알고 있어야 합니다.','모든 실험실 사용자는 대피 경로도를 통해 가장 가까운 출구를 확인해야 합니다. 대피 경로도는 정문에 게시해야 합니다.','충분한 안전 조치가 마련되고 관리자의 서면 승인이 있는 경우를 제외하고, 장비를 무인 상태로 가동해서는 안 됩니다.','슬리퍼, 샌들 또는 발가락이 노출되는 신발의 착용은 <strong>금지</strong>됩니다.','실험실 내 음식 섭취, 음료 및 흡연은 <strong>금지</strong>됩니다.','모든 기계의 전도성 표면은 적절히 접지해야 합니다.','작업에 적절한 조명을 제공해야 합니다. 작업자의 눈에 직접 빛이 닿지 않도록 배치하거나 차광해야 합니다.','배전함, 퓨즈박스 등의 전기 연결 작업은 자격을 갖추고 승인된 전기 기사만 수행할 수 있습니다.'],rehab_rules:['인체 실험 전에 사용자는 장비 기능을 점검하고, 매 사용 시 장비를 초기 설정으로 맞춰야 합니다.','실험실 관리자의 승인 없이 훈련 장비를 실험실 외부에서 사용할 수 없습니다.','인체에 부착하는 모든 전동 시스템은 감전 방지를 위해 적절히 접지해야 합니다.','인체 대상 모든 재활 실험/훈련은 캠퍼스 내 의료 클리닉이 운영되는 근무일에 실시해야 합니다.','운동 장애가 있는 피험자가 사고 시 대피할 수 있도록 휠체어를 항상 준비해 두어야 합니다.','재활 구역을 깨끗이 유지하고, 통로에 장애물이 없어야 합니다.']}};
+
+const HL_G=[0,6,7], HL_R=[0,2,4];
+const LABS=[['GH041','Dr MS Wong','Jockey Club Rehabilitation Engineering Clinic','allow'],['GH041a','Dr MS Wong','JCRE Clinic Consultation Room A','allow'],['GH041b','Dr MS Wong','JCRE Clinic Consultation Room B','allow'],['GH041c','Dr MS Wong','P & O Clinical Practice Laboratory','notallow'],['GH042','Prof. Yongping Zheng','Jockey Club Smart Ageing Hub','allow'],['GH043','Dr MS Wong','Prosthetics and Orthotics Research Lab','notallow'],['GH044','Dr MS Wong','P&O Fabrication Laboratory','notallow'],['GH044a','Dr MS Wong','P&O Machine Shop','notallow'],['GH046','Dr MS Wong','Plaster Rectification Laboratory','notallow'],['GH047','Dr T. Kobayashi','P&O Design and Performance Lab','notallow'],['GH145','Mr. Samy Leung','Electronic Workshop','allow'],['GH198','Mr. Samy Leung','BME Teaching Laboratory','allow'],['S103','Dr. Lei Sun','Biomedical Ultrasound IV','allow'],['S106','Dr. Youhua Tan','Tissue Biomechanics Testing Lab','allow'],['S106a','Prof. Mo Yang','Micro-device and Biosensor Lab','conditional'],['S106b','Dr. Thomas Lee','Nanobiotechnology Laboratory','notallow'],['S107','Prof. Yongping Zheng','Biomedical Ultrasound III','allow'],['MN106','Prof. Xiao Ling Hu','Neurorehab & Neural Engineering Lab','mn106'],['S108','Prof. Yongping Zheng','Biomedical Ultrasound I','allow'],['S108a','Dr. Puxiang Lai','Biophotonics Laboratory','conditional'],['S109','Dr. Lei Sun','Biomedical Ultrasound II','allow'],['ST405','Prof. Ming Zhang','Biomechanics Laboratory','allow'],['ST414','Mr. Samy Leung','Human Locomotion Laboratory','allow'],['Y413a','Dr. Sharon Ruan','Cell Biology and Physiology Lab','conditional'],['Y503a','Dr. Youhua Tan','Biological Cell Culture Lab','conditional'],['Y504a','Dr. Chunyi Wen','Ageing Cell Research Lab','conditional'],['Y506','Dr. Xin Zhao','Biomaterials Laboratory','notallow']];
+
+let lang='en';
+
+function badge(type){const t=T[lang];if(type==='allow')return`<span class="status-allow">${t.allow}</span>`;if(type==='notallow')return`<span class="status-notallow">${t.notallow}</span>`;if(type==='conditional')return`<span class="status-conditional">${t.conditional}</span>`;if(type==='mn106')return`<span class="status-conditional">${t.no_patient}</span>`;return'';}
+
+function render(){
+  const t=T[lang];
+  document.getElementById('heroTitle').innerHTML=t.hero_title;
+  document.getElementById('heroSub').innerHTML=t.hero_sub;
+  document.getElementById('navGeneral').textContent=t.nav_general;
+  document.getElementById('navRehab').textContent=t.nav_rehab;
+  document.getElementById('navWorkalone').textContent=t.nav_workalone;
+  document.getElementById('navDeclaration').textContent=t.nav_declaration;
+  document.getElementById('footerText').textContent=t.footer;
+
+  let h='';
+  // General
+  h+=`<div class="section" id="general"><div class="section-header"><div class="section-icon blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h2 class="section-title">${t.sec_general}</h2></div>`;
+  t.rules.forEach((r,i)=>{const hl=HL_G.includes(i);const nc=hl?'red':'blue';const lb=i===0?'!':i+1;h+=hl?`<div class="highlight-box"><div class="rule-num ${nc}">${lb}</div><div class="rule-text">${r}</div></div>`:`<div class="rule-card"><div class="rule-num ${nc}">${lb}</div><div class="rule-text">${r}</div></div>`;});
+  h+=`</div>`;
+
+  // Rehab
+  h+=`<div class="section" id="rehab"><div class="section-header"><div class="section-icon teal"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h2 class="section-title">${t.sec_rehab}</h2></div>`;
+  t.rehab_rules.forEach((r,i)=>{const hl=HL_R.includes(i);const nc=hl?'red':'teal';h+=hl?`<div class="highlight-box"><div class="rule-num ${nc}">${15+i}</div><div class="rule-text">${r}</div></div>`:`<div class="rule-card"><div class="rule-num ${nc}">${15+i}</div><div class="rule-text">${r}</div></div>`;});
+  h+=`</div>`;
+
+  // Work Alone
+  h+=`<div class="section" id="workalone"><div class="section-header"><div class="section-icon amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2 class="section-title">${t.sec_workalone}</h2></div>`;
+  h+=`<p style="font-size:14px;color:var(--gray-400);margin-bottom:20px">${t.table_scroll}</p>`;
+  h+=`<div class="table-wrapper"><table><thead><tr><th>${t.th_room}</th><th>${t.th_pi}</th><th>${t.th_lab}</th><th>${t.th_policy}</th></tr></thead><tbody>`;
+  LABS.forEach(l=>{const m=l[0]==='MN106';h+=`<tr${m?' style="background:rgba(46,196,182,0.06)"':''}>`;h+=`<td>${m?'<strong>'+l[0]+'</strong>':l[0]}</td><td>${m?'<strong>'+l[1]+'</strong>':l[1]}</td><td>${m?'<strong>'+l[2]+'</strong>':l[2]}</td><td>${badge(l[3])}</td></tr>`;});
+  h+=`</tbody></table></div><div class="mn106-note">${t.mn106_note}</div></div>`;
+
+  // Declaration
+  h+=`<div class="section" id="declaration"><div class="declaration"><h3>${t.sec_declaration}</h3><p>${t.decl_text}</p><a href="lab-safety.pdf" download style="display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:var(--navy);color:white;border:none;border-radius:12px;text-decoration:none;font-size:15px;font-weight:600;margin-bottom:24px;transition:all 0.2s;cursor:pointer;" onmouseover="this.style.background='#1A2F50'" onmouseout="this.style.background='#0B1D3A'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>${t.download_pdf}</a><div class="sig-fields"><div class="sig-field"><div style="height:48px"></div><div class="sig-label">${t.sig_signature}</div></div><div class="sig-field"><div style="height:48px"></div><div class="sig-label">${t.sig_name}</div></div><div class="sig-field"><div style="height:48px"></div><div class="sig-label">${t.sig_date}</div></div></div></div></div>`;
+
+  document.getElementById('app').innerHTML=h;
+}
+
+function switchLang(l){
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="switchLang('${l}')"]`).classList.add('active');
+  render();
+}
+
+render();
+
+window.addEventListener('scroll',()=>{
+  let c='';
+  document.querySelectorAll('.section').forEach(s=>{if(window.scrollY>=s.offsetTop-80)c=s.id;});
+  document.querySelectorAll('.nav-link').forEach(l=>{l.classList.remove('active');if(l.getAttribute('href')==='#'+c)l.classList.add('active');});
+});
+
+// Password verification
+const lockScreen = document.getElementById('lockScreen');
+const mainContent = document.getElementById('mainContent');
+const pwdInput = document.getElementById('pwdInput');
+const pwdSubmit = document.getElementById('pwdSubmit');
+const pwdError = document.getElementById('pwdError');
+
+if (sessionStorage.getItem('lab-safety-verified') === 'true') {
+  lockScreen.style.display = 'none';
+  mainContent.style.display = 'block';
+}
+
+function verifyPassword() {
+  if (pwdInput.value.trim() === 'MN106') {
+    sessionStorage.setItem('lab-safety-verified', 'true');
+    lockScreen.style.display = 'none';
+    mainContent.style.display = 'block';
+  } else {
+    pwdInput.classList.add('error');
+    pwdError.classList.add('show');
+    setTimeout(() => pwdInput.classList.remove('error'), 400);
+    setTimeout(() => pwdError.classList.remove('show'), 2000);
+  }
+}
+
+pwdSubmit.addEventListener('click', verifyPassword);
+pwdInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') verifyPassword(); });
+</script>
+</body>
+</html>
